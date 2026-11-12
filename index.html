@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>无感知见 · 守护</title>
+<style>
+:root{--bg:#f6f1e8;--card:#fffdf9;--tx:#26323d;--mut:#76828c;--bd:#e6dccb;--ac:#4f86a8;--ac2:#dbe8f1;--ok:#4caf7a;--wn:#e8a13a;--dg:#e5484d;--soft:#f1ebdf;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+:root[data-theme="sage"]{--bg:#f6f3ec;--card:#fdfcf8;--tx:#2f3a30;--mut:#7a8576;--bd:#e2dfd1;--ac:#6f9275;--ac2:#dfe9dc;--soft:#eef0e6}
+:root[data-theme="deep"]{--bg:#f1f5f9;--card:#ffffff;--tx:#0f2a43;--mut:#6a7f93;--bd:#d6e0ea;--ac:#1d4e7a;--ac2:#d5e3f1;--soft:#e8eff6}
+:root[data-theme="cocoa"]{--bg:#faf3e6;--card:#fffbf2;--tx:#3b2a20;--mut:#8a7464;--bd:#ead9c0;--ac:#8a5a3c;--ac2:#f1e0c8;--soft:#f5ead8}
+:root[data-theme="dusk"]{--bg:#f8efec;--card:#fffaf8;--tx:#3a3a44;--mut:#85808a;--bd:#ecdad4;--ac:#6e7385;--ac2:#f5dfd6;--soft:#f6e8e2}
+:root[data-theme="pine"]{--bg:#eef0ef;--card:#fafbfa;--tx:#1f3029;--mut:#6f7d76;--bd:#d8dedb;--ac:#2f6b55;--ac2:#d9e6df;--soft:#e5eae7}
+.thg{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.sw{border:2px solid var(--bd);background:var(--card);color:var(--tx);border-radius:14px;padding:8px 2px;font:inherit;font-size:12px}.sw i{display:block;width:36px;height:36px;border-radius:50%;margin:0 auto 4px;border:1px solid var(--bd)}.sw[aria-pressed=true]{border-color:var(--ac);font-weight:700}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.6 "PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",sans-serif}
+#app{max-width:480px;margin:0 auto;min-height:100dvh;padding:14px 14px 84px}
+h1{font-size:19px;margin:0}h2{font-size:15px;margin:0 0 10px}
+.mut{color:var(--mut);font-size:13px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:18px;padding:16px;margin-top:12px;box-shadow:0 2px 10px rgba(240,138,60,.08)}
+.top{display:flex;justify-content:space-between;align-items:center}
+.eld{display:flex;gap:8px;margin-top:12px;overflow-x:auto}
+.eld button{flex:none;border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:99px;padding:6px 14px;font:inherit;display:flex;gap:6px;align-items:center}
+.eld button[aria-pressed=true]{background:var(--ac);border-color:var(--ac);color:#fff}
+.dot{width:9px;height:9px;border-radius:50%;display:inline-block}
+.hero{background:linear-gradient(135deg,var(--ac2),var(--card));display:flex;gap:16px;align-items:center}
+.ring{position:relative;width:96px;height:96px;flex:none}.ring b{position:absolute;inset:0;display:grid;place-items:center;font-size:28px}
+.lv{display:inline-block;color:#fff;border-radius:99px;padding:0 10px;font-size:12px;font-weight:600}
+.row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:12px}
+.row div{background:var(--soft);border-radius:12px;padding:8px 10px}.row span{font-size:12px;color:var(--mut);display:block}.row b{font-size:17px}
+#ban{display:none;margin-top:12px;background:var(--dg);color:#fff;border-radius:16px;padding:12px 14px}
+#ban button{margin-top:8px;background:#fff;color:var(--dg);border:0;border-radius:10px;padding:6px 14px;font:inherit;font-weight:600}
+.acts{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px}
+.acts button{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:10px 2px;color:var(--tx);font:inherit;font-size:13px}
+.acts button i{display:block;font-style:normal;font-size:22px}
+.acts .d{border-color:var(--dg);color:var(--dg)}
+ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.ev{display:grid;grid-template-columns:48px 1fr;gap:8px;padding:8px 10px;border-radius:10px;background:var(--soft);border-left:4px solid var(--ok)}
+.ev.wn{border-color:var(--wn)}.ev.dg{border-color:var(--dg)}.ev time{color:var(--mut);font-size:12px}
+.fac div{display:grid;grid-template-columns:120px 1fr 28px;gap:8px;align-items:center;font-size:13px;margin-bottom:6px}
+.bar{height:8px;border-radius:4px;background:var(--soft);overflow:hidden}.bar i{display:block;height:100%;background:var(--ac);border-radius:4px}
+.kp{display:grid;grid-template-columns:1fr 1fr;gap:8px}.kp div{background:var(--soft);border-radius:12px;padding:10px}.kp span{font-size:12px;color:var(--mut);display:block}.kp b{font-size:20px}
+svg{display:block;width:100%;height:auto}
+.tk{display:flex;gap:10px;align-items:center;padding:10px;border-radius:12px;background:var(--soft)}
+.tk input{width:20px;height:20px;accent-color:var(--ac)}.tk.done span{text-decoration:line-through;color:var(--mut)}.tk em{margin-left:auto;font-style:normal;font-size:12px;color:var(--mut)}.tk em.late{color:var(--dg)}
+.msg{background:var(--soft);border-radius:12px;padding:8px 12px;font-size:14px}.msg small{color:var(--mut);display:block}
+.send{display:flex;gap:8px;margin-top:10px}
+input.in,select.in{flex:1;width:100%;border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:10px;padding:9px 12px;font:inherit}
+.btn{border:0;background:var(--ac);color:#fff;border-radius:10px;padding:9px 16px;font:inherit;font-weight:600}
+.btn.o{background:var(--card);color:var(--tx);border:1px solid var(--bd)}
+label.f{display:block;margin-bottom:10px;font-size:13px;color:var(--mut)}label.f>*{margin-top:4px;color:var(--tx)}
+.chk{display:flex;gap:14px;margin:6px 0 10px}.chk label{display:flex;gap:4px;align-items:center}.chk input{accent-color:var(--ac)}
+.esc{display:grid;gap:6px;font-size:13px}.esc div{background:var(--soft);border-radius:10px;padding:6px 10px}
+nav{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--bd);padding:6px 8px calc(6px + env(safe-area-inset-bottom,0px));z-index:5}
+nav div{max-width:480px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr)}
+nav button{border:0;background:none;color:var(--mut);font:inherit;font-size:12px;padding:4px}nav button i{display:block;font-style:normal;font-size:22px}
+nav button[aria-pressed=true]{color:var(--ac);font-weight:700}
+#ts{position:fixed;left:50%;bottom:calc(80px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--tx);color:var(--bg);padding:8px 16px;border-radius:99px;font-size:13px;opacity:0;transition:.25s;pointer-events:none;z-index:9}
+#ts.on{opacity:1}
+.pg{display:none}.pg.on{display:block}
+.pr{display:grid;grid-template-columns:1fr auto 84px;gap:8px;padding:7px 0;border-bottom:1px dashed var(--bd);align-items:center}.pr em{font-style:normal;color:var(--mut);font-size:12px;text-align:right}
+.stk{display:flex;height:14px;border-radius:7px;overflow:hidden;margin:6px 0}.stk i{display:block;height:100%}.lgd{font-size:12px;color:var(--mut);display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.ev.fu{opacity:.55}.chips{display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap}
+.fl{padding:5px 12px;border-radius:99px;border:1px solid var(--bd);background:var(--card);color:var(--tx);font:inherit;font-size:13px}.fl[aria-pressed=true]{background:var(--ac);color:#fff;border-color:var(--ac)}
+#wv{width:100%;height:auto;display:block;margin-bottom:6px}
+.envg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.en{background:var(--soft);border-radius:12px;padding:8px 10px;border-left:4px solid var(--ok)}.en.s1{border-color:var(--wn)}.en.s2{border-color:var(--dg);animation:bk 1s infinite}.en span{font-size:12px;color:var(--mut);display:block}.en b{font-size:18px}.en small{font-size:11px;color:var(--mut);margin-left:2px}@keyframes bk{50%{opacity:.55}}@media(prefers-reduced-motion:reduce){.en.s2{animation:none}}
+.scn{display:flex;gap:8px;align-items:center;background:var(--soft);border-radius:12px;padding:8px 10px}.scn div{flex:1}.scn small{color:var(--mut);display:block;font-size:12px}.scn input{width:20px;height:20px;accent-color:var(--ac)}.scn .btn{padding:5px 10px;font-size:12px}
+</style>
+</head>
+<body>
+<div id="app">
+ <div class="top"><div><h1>守护 · 无感知见</h1><span class="mut" id="hi"></span></div><span class="mut">🔒 无摄像头 · 保护隐私</span></div>
+ <div class="eld" id="eld"></div>
+
+ <section class="pg on" id="p0">
+  <div id="ban"><b id="bt"></b><div class="mut" style="color:#fff;opacity:.9;font-size:12px">5 分钟未确认将追加短信与微信，10 分钟未确认将电话并通知社区上门</div><button id="bx" type="button">我已知晓，去处理</button></div>
+  <div class="card hero"><div class="ring"><svg viewBox="0 0 96 96"><circle cx="48" cy="48" r="40" fill="none" stroke="var(--bd)" stroke-width="9"/><circle id="rg" cx="48" cy="48" r="40" fill="none" stroke-width="9" stroke-linecap="round" stroke-dasharray="251" transform="rotate(-90 48 48)"/></svg><b id="rn"></b></div>
+   <div><div class="mut">今日异常风险</div><span class="lv" id="rl"></span><p style="margin:6px 0 0" id="rs"></p></div></div>
+  <div class="card"><h2>居家位置（户型示意）</h2><div id="fp"></div><p class="mut" id="fph" style="margin:6px 0 0"></p></div>
+  <div class="row"><div><span>当前位置</span><b id="rm"></b></div><div><span>状态</span><b id="ac"></b></div><div><span>已持续</span><b id="du"></b></div></div>
+  <div class="acts">
+   <button data-a="call" type="button"><i>📞</i>打电话</button>
+   <button data-a="greet" type="button"><i>🔊</i>语音问候</button>
+   <button data-a="visit" type="button"><i>🏠</i>请人探访</button>
+   <button data-a="notify" class="d" type="button"><i>📣</i>一键通知</button>
+  </div>
+  <div class="card"><h2>事件与提醒</h2><div class="chips"><button class="fl" data-f="" aria-pressed="true" type="button">全部</button><button class="fl" data-f="wn" aria-pressed="false" type="button">需关注</button><button class="fl" data-f="dg" aria-pressed="false" type="button">高危</button></div><ul id="al"></ul></div>
+ </section>
+
+ <section class="pg" id="p1">
+  <div class="card"><h2>风险趋势与 3 日预测</h2><div id="tr"></div><div class="mut">橙色实线为近 7 天，虚线为预测，红线 70 分为预警线</div></div>
+  <div class="card"><h2>主要风险原因</h2><div class="fac" id="fc"></div></div>
+  <div class="card"><h2>身体指标（雷达非接触估算）</h2><canvas id="wv" width="600" height="130"></canvas><div class="mut" style="margin-bottom:8px">上：呼吸 · 下：心跳（模拟波形）</div><div class="kp" id="vt"></div><p class="mut" style="margin:8px 0 0">不测血压血氧，仅作日常参考，非医疗诊断。</p></div>
+  <div class="card"><h2>未来 24 小时高危时段</h2><p id="pk" style="margin:0 0 8px"></p><svg id="pc" viewBox="0 0 300 80"></svg><div class="mut">红色柱为高危窗口（概率 60% 以上），黑框为当前小时</div></div>
+  <div class="card"><h2>行为画像：今日 vs 30 天基线</h2><div id="pf"></div><p class="mut" style="margin:8px 0 0">红色表示偏离基线 20% 以上</p></div>
+  <div class="card"><h2>睡眠与步态</h2><div class="stk" id="sk"></div><div class="lgd" id="sg"></div><div class="kp" id="sp"></div></div>
+  <div class="card"><h2>今日生活时间线</h2><ul id="tl"></ul></div>
+  <div class="card"><h2>行为风险报告</h2><div class="chips"><button class="fl" data-p="d" aria-pressed="true" type="button">日报</button><button class="fl" data-p="w" aria-pressed="false" type="button">周报</button><button class="fl" data-p="m" aria-pressed="false" type="button">月报</button><button class="fl" data-p="y" aria-pressed="false" type="button">年报</button></div><div class="kp" id="rk"></div><p class="mut" id="rs" style="margin:8px 0 0"></p><button class="btn" id="rsd" type="button" style="margin-top:10px">发送给护理圈</button></div>
+ </section>
+
+ <section class="pg" id="p2">
+  <div class="card"><h2>快捷关怀</h2><div class="send"><select class="in" id="xg"><option>早安问候</option><option>吃药提醒</option><option>喝水提醒</option><option>晚安问候</option></select><button class="btn" data-q="g" type="button">🔊 播放</button></div><div class="send"><select class="in" id="xv"><option>今天下午</option><option>明天上午</option><option>本周内</option></select><button class="btn" data-q="v" type="button">🏠 申请探访</button></div><p class="mut" id="xs" style="margin:8px 0 0"></p></div>
+  <div class="card"><h2>服药与照护任务 <span class="mut" id="pg"></span></h2><div class="bar" style="margin-bottom:10px"><i id="pb" style="width:0"></i></div><ul id="tk"></ul></div>
+  <div class="card"><h2>护理圈留言</h2><ul id="ms"></ul><div class="send"><input class="in" id="mi" maxlength="80" placeholder="给家人和护理员留言…"><button class="btn" id="mb" type="button">发送</button></div></div>
+  <div class="card"><h2>护理圈成员</h2><ul id="mem"></ul></div>
+ </section>
+
+ <section class="pg" id="p5">
+  <div class="card"><h2>环境传感 <span class="mut">更新 <span id="et">--:--</span></span></h2><div class="envg" id="en"></div><button class="btn o" id="bump" type="button" style="margin-top:10px">模拟超限</button></div>
+  <div class="card"><h2>联动场景</h2><ul id="scl"></ul></div>
+  <div class="card"><h2>区域规则</h2><ul id="rll"></ul><p class="mut" style="margin:8px 0 0">阈值可按个人基线自适应调整。</p></div>
+  <div class="card"><h2>设备状态</h2><ul id="dvl"></ul><p class="mut" style="margin:8px 0 0">演示数据，接入真实设备后显示实时状态。</p></div>
+ </section>
+ <section class="pg" id="p3">
+  <div class="card"><h2>主题色彩</h2><div class="thg" id="thl"></div></div>
+  <div class="card"><h2>通知设置</h2>
+   <label class="f">监护人姓名<input class="in" id="gn"></label>
+   <label class="f">手机号（接收预警）<input class="in" id="gt" inputmode="numeric" maxlength="11"></label>
+   <div class="mut">通知方式</div><div class="chk"><label><input type="checkbox" value="短信" checked>短信</label><label><input type="checkbox" value="微信" checked>微信</label><label><input type="checkbox" value="电话">电话</label></div>
+   <label class="f">什么时候通知我<select class="in" id="gr"><option value="fall">仅跌倒</option><option value="high" selected>高危（评分 70 以上）与高峰预警</option><option value="watch">需关注（评分 45 以上）</option></select></label>
+   <div style="display:flex;gap:8px"><button class="btn" id="gs" type="button">保存</button><button class="btn o" id="gtst" type="button">发送测试消息</button></div></div>
+  <div class="card"><h2>预警升级策略</h2><div class="esc"><div><b>L1 立即</b> App 推送给你</div><div><b>L2 5 分钟未确认</b> 短信 + 微信</div><div><b>L3 10 分钟未确认</b> 电话 + 通知社区上门</div></div></div>
+  <div class="card"><h2>户型图定制 <span class="mut" id="pln"></span></h2><img id="pvi" alt="已上传户型图预览" style="display:none;width:100%;border-radius:12px;margin-bottom:10px"><label class="f">为当前老人上传户型图<input class="in" id="pu" type="file" accept="image/png,image/jpeg,image/webp"></label><p class="mut" style="margin:0 0 10px">支持 PNG、JPG、WebP，按 3:2 适配，将作为首页“居家位置”的底图。上传后在首页点击图片，可标定老人当前所在房间的位置。</p><button class="btn o" id="pc2" type="button">恢复演示户型</button></div>
+  <div class="card"><h2>设备与演示</h2><p class="mut" style="margin:0 0 10px">主雷达：演示在线 · 覆盖卧室、客厅、厨房、卫生间</p><button class="btn o" id="demo" type="button">模拟一次跌倒预警</button></div>
+ </section>
+</div>
+<nav><div id="nv">
+ <button data-t="0" aria-pressed="true" type="button"><i>🏡</i>首页</button>
+ <button data-t="1" aria-pressed="false" type="button"><i>💗</i>健康</button>
+ <button data-t="2" aria-pressed="false" type="button"><i>🤝</i>关爱</button>
+ <button data-t="3" aria-pressed="false" type="button"><i>💡</i>家居</button>
+ <button data-t="4" aria-pressed="false" type="button"><i>⚙️</i>我的</button>
+</div></nav>
+<div id="ts" role="status"></div>
+<script>
+var $=function(i){return document.getElementById(i)};
+var E=[
+{n:'王秀兰',a:78,r:34,tr:[30,31,29,33,32,34,34],pr:[35,36,37],room:'客厅',act:'静坐',min:42,v:[16,72,'7.2 小时','1.0 米/秒'],pk:'预计 15:00–17:00 活动偏少，请留意',f:[['夜间起夜次数增加',18],['步速轻微下降',12],['厨房活动稳定',4]],al:[['10:42','','午后静坐时长略高于基线'],['07:15','','晨起时间正常']],tk:[['08:00 降压药',1],['12:30 午餐后散步',0],['20:00 降压药',0]]},
+{n:'李建国',a:82,r:61,tr:[48,50,52,55,57,59,61],pr:[64,67,71],room:'卧室',act:'卧床',min:95,v:[18,76,'5.8 小时','0.8 米/秒'],pk:'预计 02:00–05:00 夜间如厕风险较高',f:[['夜间如厕次数明显增多',28],['白天卧床时长上升',22],['步速下降',11]],al:[['09:30','wn','近 3 日夜间如厕 4 次以上'],['昨天','wn','白天卧床总计 5.2 小时，高于基线'],['07:50','','晨起时间偏晚 40 分钟']],tk:[['08:00 降糖药',1],['12:00 测血糖',0],['19:00 降糖药',0]]},
+{n:'陈桂英',a:85,r:78,tr:[55,60,63,66,70,74,78],pr:[81,84,86],room:'卫生间',act:'停留',min:38,v:[19,84,'5.1 小时','0.6 米/秒'],pk:'预计 11:00–13:00 及 23:00–03:00 为高危窗口',f:[['步速持续下降',30],['夜间离床次数异常',26],['卫生间停留过长',16],['厨房无活动 36 小时',6]],al:[['11:05','dg','卫生间停留 38 分钟，超过基线 3 倍'],['昨天','wn','厨房连续 36 小时无烹饪活动'],['11/05','wn','夜间活动节律异常 2 次']],tk:[['08:00 降压药',1],['12:00 午餐（厨房无活动）',0],['20:00 降压药',0]]}];
+var mem=[['女儿 · 王丽','监护人'],['社区护理员 · 张姐','每周探访'],['邻居 · 刘阿姨','紧急联系人']];
+var cur=0,msgs=[[['系统','今日 11:05','陈桂英卫生间停留超过基线 3 倍']],[],[]],G={name:'王丽',tel:'',rule:'high'};
+try{var sv=JSON.parse(localStorage.getItem('guard_cfg')||'null');if(sv)G=sv}catch(e){}
+function toast(t){var s=$('ts');s.textContent=t;s.className='on';clearTimeout(toast.t);toast.t=setTimeout(function(){s.className=''},2200)}
+function lv(r){return r>=70?['高危','var(--dg)','建议现在联系，必要时请人上门看看']:r>=45?['需关注','var(--wn)','近期有变化，留意今日状态']:['低风险','var(--ok)','一切平稳，无需特别处理']}
+function trend(e){var all=e.tr.concat(e.pr),W=320,H=130,x=function(i){return 20+i*(W-40)/9},y=function(v){return H-14-(v-20)/80*(H-30)};
+ var h=e.tr.map(function(v,i){return x(i)+','+y(v)}).join(' '),p=[e.tr[6]].concat(e.pr).map(function(v,i){return x(i+6)+','+y(v)}).join(' ');
+ return '<svg viewBox="0 0 '+W+' '+H+'"><line x1="20" x2="300" y1="'+y(70)+'" y2="'+y(70)+'" stroke="var(--dg)" stroke-dasharray="3 3"/><polyline fill="none" stroke="var(--ac)" stroke-width="3" stroke-linecap="round" points="'+h+'"/><polyline fill="none" stroke="var(--wn)" stroke-width="3" stroke-dasharray="5 5" points="'+p+'"/>'+all.map(function(v,i){return '<circle cx="'+x(i)+'" cy="'+y(v)+'" r="3.5" fill="'+(i>6?'var(--wn)':'var(--ac)')+'"/>'}).join('')+'<text x="'+x(6)+'" y="'+(y(all[6])-8)+'" font-size="11" text-anchor="middle" fill="var(--tx)">今天</text></svg>'}
+function ev(a){return '<li class="ev '+a[1]+'"><time>'+a[0]+'</time><span>'+a[2]+'</span></li>'}
+function render(){var e=E[cur],L=lv(e.r);
+ $('eld').innerHTML=E.map(function(x,i){return '<button type="button" data-i="'+i+'" aria-pressed="'+(i==cur)+'"><span class="dot" style="background:'+lv(x.r)[1]+'"></span>'+x.n+'</button>'}).join('');
+ $('rn').textContent=e.r;$('rg').style.stroke=L[1];$('rg').style.strokeDashoffset=251*(1-e.r/100);
+ $('rl').textContent=L[0];$('rl').style.background=L[1];$('rs').textContent=L[2];
+ $('rm').textContent=e.room;$('ac').textContent=e.act;$('du').textContent=e.min+' 分钟';
+ alf();
+ $('tr').innerHTML=trend(e);
+ $('fc').innerHTML=e.f.map(function(f){return '<div><span>'+f[0]+'</span><span class="bar"><i style="width:'+Math.min(100,f[1]*3)+'%"></i></span><em style="font-style:normal;text-align:right">'+f[1]+'</em></div>'}).join('');
+ var n=['呼吸（次/分）','心率（次/分）','昨夜睡眠','步速'];$('vt').innerHTML=e.v.map(function(v,i){return '<div><span>'+n[i]+'</span><b>'+v+'</b></div>'}).join('');
+ $('pk').textContent=e.pk;
+ var b=$('ban');if(e.r>=70&&!e.ack){b.style.display='block';$('bt').textContent='⚠ '+e.n+'：'+e.al[0][2]}else b.style.display='none';
+ tasks();msgl();$('mem').innerHTML=mem.map(function(m){return '<li class="msg"><b>'+m[0]+'</b><small>'+m[1]+'</small></li>'}).join('');render2()}
+function tasks(){var e=E[cur],d=e.tk.filter(function(t){return t[1]}).length,h=new Date().getHours();
+ $('pg').textContent=d+'/'+e.tk.length;$('pb').style.width=d/e.tk.length*100+'%';
+ $('tk').innerHTML=e.tk.map(function(t,i){var hr=parseInt(t[0]),late=!t[1]&&hr+1<=h;return '<li><label class="tk'+(t[1]?' done':'')+'"><input type="checkbox" data-k="'+i+'"'+(t[1]?' checked':'')+'><span>'+t[0]+'</span>'+(late?'<em class="late">已超时</em>':t[1]?'<em>已完成</em>':'')+'</label></li>'}).join('')}
+function msgl(){$('ms').innerHTML=msgs[cur].length?msgs[cur].map(function(m){return '<li class="msg"><small>'+m[0]+' · '+m[1]+'</small>'+m[2]+'</li>'}).join(''):'<li class="mut">暂无留言</li>'}
+function tm(){var d=new Date();return ('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2)}
+document.addEventListener('click',function(ev){var t=ev.target.closest('button,input');if(!t)return;
+ if(t.dataset.i!=null){cur=+t.dataset.i;render()}
+ else if(t.dataset.t!=null){var k=+t.dataset.t;document.querySelectorAll('.pg').forEach(function(p,i){p.className='pg'+(i==k?' on':'')});document.querySelectorAll('#nv button').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.t==k)});scrollTo(0,0)}
+ else if(t.dataset.a){var n=E[cur].n,a=t.dataset.a;
+  if(a=='call')toast('正在呼叫 '+n+'（待接入通话服务）');
+  if(a=='greet')toast('已向 '+n+' 家中播放语音问候');
+  if(a=='visit'){toast('已请社区护理员上门探访 '+n);msgs[cur].unshift(['系统',tm(),G.name+' 申请上门探访']);msgl()}
+  if(a=='notify'){toast('已通知护理圈全部成员');msgs[cur].unshift(['系统',tm(),G.name+' 发起一键通知']);msgl()}}
+ else if(t.id=='bx'){E[cur].ack=1;render();toast('已确认，请尽快联系 '+E[cur].n)}
+ else if(t.dataset.k!=null){E[cur].tk[+t.dataset.k][1]=t.checked?1:0;tasks()}
+ else if(t.id=='mb'){var v=$('mi').value.trim();if(!v)return;msgs[cur].unshift([G.name,tm(),v]);$('mi').value='';msgl()}
+ else if(t.id=='gs'){G.name=$('gn').value||G.name;G.tel=$('gt').value;G.rule=$('gr').value;try{localStorage.setItem('guard_cfg',JSON.stringify(G))}catch(e){}$('hi').textContent=G.name+'，您好';toast('设置已保存')}
+ else if(t.dataset.th){setTh(t.dataset.th)}
+ else if(t.dataset.f!=null){FL=t.dataset.f;alf()}
+ else if(t.dataset.p){PR=t.dataset.p;rep()}
+ else if(t.dataset.sc){toast('已试运行：'+SC[+t.dataset.sc][0]+'（演示）')}
+ else if(t.dataset.sw){ST[t.dataset.sw]=t.checked?1:0;toast(t.checked?'已开启':'已关闭')}
+ else if(t.dataset.q=='g'){toast('已向 '+E[cur].n+' 家中播放：'+$('xg').value)}
+ else if(t.dataset.q=='v'){var vs=$('xv').value;$('xs').textContent='已申请“'+vs+'”上门探访，等待社区护理员确认';msgs[cur].unshift(['系统',tm(),G.name+' 申请上门探访：'+vs]);msgl();toast('已提交探访申请')}
+ else if(t.id=='rsd')toast('报告已发送给护理圈')
+ else if(t.id=='bump'){bump=1;env();setTimeout(function(){bump=0},6000)}
+ else if(t.id=='gtst')toast('测试消息已发送（演示）')
+ else if(t.id=='demo'){var e=E[cur];e.al.unshift([tm(),'dg','检测到跌倒：高度骤降后静卧超过 3 秒']);e.r=Math.max(e.r,82);e.act='疑似跌倒';e.ack=0;render();document.querySelector('[data-t="0"]').click()}});
+var X=[{pf:[['起夜次数','次',2,1,1],['白天卧床','小时',1.5,1.5,1],['步速','米/秒',1,1.1,-1],['厨房活动','次',3,3,-1],['卫生间停留','分钟',12,10,1]],sl:[18,22,2,0,.55,2.1],pk:[15,16,17],tl:[['07:15','起床，晨起正常'],['08:00','服药 · 早餐（厨房）'],['10:42','客厅静坐'],['12:30','午餐'],['15:00','午休'],['20:00','晚间服药']]},
+{pf:[['起夜次数','次',4,2,1],['白天卧床','小时',5.2,3,1],['步速','米/秒',.8,.95,-1],['厨房活动','次',2,3,-1],['卫生间停留','分钟',15,12,1]],sl:[14,17,4,1,.48,3],pk:[2,3,4,5],tl:[['07:50','起床（偏晚 40 分钟）'],['08:00','服药（降糖）'],['09:30','卧床休息'],['12:00','测血糖'],['14:00','午休'],['19:00','晚间服药']]},
+{pf:[['起夜次数','次',3,1,1],['白天卧床','小时',3.5,2.5,1],['步速','米/秒',.6,.8,-1],['厨房活动','次',0,3,-1],['卫生间停留','分钟',38,12,1]],sl:[10,15,5,3,.4,4.2],pk:[11,12,23,0,1,2,3],tl:[['07:30','起床'],['08:00','服药（降压）'],['11:05','卫生间停留 38 分钟'],['12:00','午餐（厨房无活动）'],['15:00','午休'],['20:00','晚间服药']]}];
+var FL='',PR='d',bump=0,ST={};
+var SC=[['夜间起夜','自动开小夜灯并记录次数',1],['卫生间久留','超 30 分钟提醒并通知我',1],['疑似跌倒','呼叫老人、通知护理圈、解锁门禁',1],['地面湿度高','启动排风并提醒防滑',0]],RL=[['卫生间停留超过 30 分钟',1],['夜间离床超过 3 次',1],['厨房 24 小时无活动',1],['白天卧床超过 4 小时',0],['久坐超过 2 小时',1]],DV=[['主雷达 · 客厅','在线','信号良好'],['卫生间雷达','在线','信号良好'],['卧室雷达','在线','信号良好'],['小夜灯','在线','电量 82%'],['烟感报警器','在线','电量 64%'],['智能门锁','离线','请检查电池']];
+function alf(){var l=E[cur].al.filter(function(a){return !FL||a[1]==FL});$('al').innerHTML=l.length?l.map(ev).join(''):'<li class="mut">暂无记录</li>';document.querySelectorAll('[data-f]').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.f==FL)})}
+function fp(e,c){var R=[['卧室',10,10,110,80],['客厅',120,10,170,80],['厨房',10,90,110,70],['卫生间',120,90,80,70],['玄关',200,90,90,70]],s='<svg viewBox="0 0 300 170">';R.forEach(function(r){var on=r[0]==e.room;s+='<rect x="'+r[1]+'" y="'+r[2]+'" width="'+r[3]+'" height="'+r[4]+'" rx="6" fill="'+(on?'var(--ac2)':'var(--soft)')+'" stroke="var(--bd)" stroke-width="2"/><text x="'+(r[1]+8)+'" y="'+(r[2]+18)+'" font-size="12" fill="var(--mut)">'+r[0]+'</text>';if(on){var cx=r[1]+r[3]/2,cy=r[2]+r[4]/2+6;s+='<circle cx="'+cx+'" cy="'+cy+'" r="6" fill="'+c+'"><animate attributeName="r" values="6;20" dur="2s" repeatCount="indefinite"/><animate attributeName="opacity" values=".5;0" dur="2s" repeatCount="indefinite"/></circle><circle cx="'+cx+'" cy="'+cy+'" r="7" fill="'+c+'"/>'}});return s+'</svg>'}
+function rep(){var e=E[cur],a=Math.round(e.tr.reduce(function(s,v){return s+v},0)/7),m=Math.max.apply(0,e.tr),n=e.al.length,K={d:[e.r,Math.min(100,e.r+6),e.al.filter(function(x){return x[1]}).length],w:[a,m,n+1],m:[a-2,m+4,n*3],y:[a-6,m+10,n*12+4]}[PR];
+ $('rk').innerHTML=[['平均风险',K[0]],['峰值风险',K[1]],['预警次数',K[2]+' 次'],['范围',{d:'今日',w:'近 7 天',m:'近 30 天',y:'近 12 个月'}[PR]]].map(function(k){return '<div><span>'+k[0]+'</span><b>'+k[1]+'</b></div>'}).join('');
+ $('rs').textContent='摘要：'+e.n+'的主要风险来自“'+e.f[0][0]+'”'+(e.r>=70?'，建议尽快联系并安排上门。':'，建议保持日常关注。')+'（演示数据）';
+ document.querySelectorAll('[data-p]').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.p==PR)})}
+function env(){var e=E[cur],bt=e.room=='卫生间',sl=e.room=='卧室',v=[['室温','℃',24+Math.random()-.5,function(v){return v<18||v>28?1:0}],['湿度','%',55+Math.random()*4,function(v){return v<40||v>70?1:0}],['地面湿度','%',(bt?78:35)+Math.random()*3+bump*15,function(v){return v>85?2:v>75?1:0}],['CO₂','ppm',(sl?1050:700)+Math.random()*40+bump*600,function(v){return v>1500?2:v>1000?1:0}],['PM2.5','μg/m³',14+Math.random()*4+bump*60,function(v){return v>75?2:v>35?1:0}]];
+ $('en').innerHTML=v.map(function(i){return '<div class="en s'+i[3](i[2])+'"><span>'+i[0]+'</span><b>'+(i[1]=='℃'?i[2].toFixed(1):Math.round(i[2]))+'<small>'+i[1]+'</small></b></div>'}).join('');$('et').textContent=tm()}
+function render2(){var e=E[cur],x=X[cur],h=new Date().getHours(),s=x.sl;
+ $('fp').innerHTML=fp2(e,lv(e.r)[1]);pvu();$('pln').textContent='· '+e.n;$('fph').textContent=PL[cur]?'已使用自定义户型图 · 点击图片可标定当前房间位置':'演示户型 · 可在“我的”里上传自己的户型图';
+ var bs='';for(var i=0;i<24;i++){var p=x.pk.indexOf(i)>-1?.62+.04*(i%3):.12+.03*((i*7)%5);bs+='<rect x="'+(6+i*12)+'" y="'+(62-p*55)+'" width="9" height="'+p*55+'" rx="2" fill="'+(p>=.6?'var(--dg)':'var(--ac2)')+'"'+(i==h?' stroke="var(--tx)" stroke-width="1.5"':'')+'/>'}
+ [0,6,12,18,23].forEach(function(i){bs+='<text x="'+(10+i*12)+'" y="76" font-size="9" text-anchor="middle" fill="var(--mut)">'+i+'时</text>'});$('pc').innerHTML=bs;
+ $('pf').innerHTML=x.pf.map(function(p){var w=p[4]*(p[2]-p[3])/p[3]>.2;return '<div class="pr"><span>'+p[0]+'</span><b'+(w?' style="color:var(--dg)"':'')+'>'+p[2]+' '+p[1]+'</b><em>基线 '+p[3]+'</em></div>'}).join('');
+ var lt=100-s[0]-s[1]-5,sg=[[s[0],'#6554bb','深睡'],[lt,'var(--ac)','浅睡'],[s[1],'#3ddc97','REM'],[5,'var(--wn)','清醒']];
+ $('sk').innerHTML=sg.map(function(g){return '<i style="width:'+g[0]+'%;background:'+g[1]+'"></i>'}).join('');
+ $('sg').innerHTML=sg.map(function(g){return '<span><span class="dot" style="background:'+g[1]+'"></span> '+g[2]+' '+g[0]+'%</span>'}).join('');
+ $('sp').innerHTML=[['总睡眠',e.v[2]],['夜间醒来',s[2]+' 次'],['呼吸暂停',s[3]+' 次'],['步速',e.v[3]],['步幅',s[4]+' 米'],['起身耗时',s[5]+' 秒']].map(function(k){return '<div><span>'+k[0]+'</span><b>'+k[1]+'</b></div>'}).join('');
+ $('tl').innerHTML=x.tl.map(function(t){var d=parseInt(t[0])<=h;return '<li class="ev'+(d?'':' fu')+'"><time>'+t[0]+'</time><span>'+t[1]+(d?'':'（预计）')+'</span></li>'}).join('');
+ rep();env()}
+$('scl').innerHTML=SC.map(function(s,i){return '<li class="scn"><div><b>'+s[0]+'</b><small>'+s[1]+'</small></div><input type="checkbox" data-sw="s'+i+'"'+(s[2]?' checked':'')+' aria-label="启用"><button class="btn o" data-sc="'+i+'" type="button">试运行</button></li>'}).join('');
+$('rll').innerHTML=RL.map(function(r,i){return '<li class="scn"><div>'+r[0]+'</div><input type="checkbox" data-sw="r'+i+'"'+(r[1]?' checked':'')+' aria-label="启用"></li>'}).join('');
+$('dvl').innerHTML=DV.map(function(d){return ev([d[1],d[1]=='在线'?'':'wn',d[0]+' · '+d[2]])}).join('');
+setInterval(env,2000);
+(function(){var c=$('wv'),g=c.getContext('2d'),t=0;function d(){var w=c.width,h=c.height,s=getComputedStyle(document.documentElement);g.clearRect(0,0,w,h);[['--ac',36,24,.018,1.6],['--dg',92,6,.3,9]].forEach(function(l){g.beginPath();g.strokeStyle=s.getPropertyValue(l[0]).trim();g.lineWidth=2.5;for(var x=0;x<w;x+=3){var y=l[1]+Math.sin(x*l[3]+t*l[4])*l[2];x?g.lineTo(x,y):g.moveTo(x,y)}g.stroke()});t+=.03;requestAnimationFrame(d)}d()})();
+var PL={},ZP={};try{PL=JSON.parse(localStorage.getItem('guard_plan')||'{}');ZP=JSON.parse(localStorage.getItem('guard_zp')||'{}')}catch(e){}
+function psv(){try{localStorage.setItem('guard_plan',JSON.stringify(PL));localStorage.setItem('guard_zp',JSON.stringify(ZP))}catch(e){toast('图片较大，仅本次有效')}}
+function pvu(){var i=$('pvi');i.style.display=PL[cur]?'block':'none';if(PL[cur])i.src=PL[cur]}
+function fp2(e,c){var im=PL[cur],R=[['卧室',10,10,110,90],['客厅',120,10,170,90],['厨房',10,100,110,90],['卫生间',120,100,80,90],['玄关',200,100,90,90]],s='<svg viewBox="0 0 300 200"'+(im?' style="cursor:crosshair"':'')+'>';
+ if(im)s+='<image href="'+im+'" width="300" height="200" preserveAspectRatio="xMidYMid slice"/>';
+ R.forEach(function(r){var on=r[0]==e.room;if(!im)s+='<rect x="'+r[1]+'" y="'+r[2]+'" width="'+r[3]+'" height="'+r[4]+'" rx="6" fill="'+(on?'var(--ac2)':'var(--soft)')+'" stroke="var(--bd)" stroke-width="2"/><text x="'+(r[1]+8)+'" y="'+(r[2]+18)+'" font-size="12" fill="var(--mut)">'+r[0]+'</text>';
+  if(on){var p=ZP[cur+':'+r[0]]||[r[1]+r[3]/2,r[2]+r[4]/2+6];s+='<circle cx="'+p[0]+'" cy="'+p[1]+'" r="6" fill="'+c+'"><animate attributeName="r" values="6;20" dur="2s" repeatCount="indefinite"/><animate attributeName="opacity" values=".5;0" dur="2s" repeatCount="indefinite"/></circle><circle cx="'+p[0]+'" cy="'+p[1]+'" r="7" fill="'+c+'" stroke="#fff" stroke-width="2"/>';if(im)s+='<text x="'+p[0]+'" y="'+(p[1]-14)+'" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" stroke="#000" stroke-width="3" paint-order="stroke">'+r[0]+'</text>'}});
+ return s+'</svg>'}
+$('fp').addEventListener('click',function(ev){if(!PL[cur])return;var b=this.querySelector('svg').getBoundingClientRect();ZP[cur+':'+E[cur].room]=[(ev.clientX-b.left)/b.width*300,(ev.clientY-b.top)/b.height*200];psv();render2();toast('已标定“'+E[cur].room+'”位置')});
+$('pu').addEventListener('change',function(){var inp=this,f=inp.files[0];if(!f)return;if(!/^image\/(png|jpe?g|webp)$/.test(f.type)){toast('请选择 PNG、JPG 或 WebP 图片');return}
+ var r=new FileReader();r.onload=function(){var im=new Image();im.onload=function(){var c=document.createElement('canvas'),w=Math.min(900,im.width),h=Math.round(w*im.height/im.width);c.width=w;c.height=h;c.getContext('2d').drawImage(im,0,0,w,h);PL[cur]=c.toDataURL('image/jpeg',.82);Object.keys(ZP).forEach(function(k){if(k.indexOf(cur+':')==0)delete ZP[k]});psv();inp.value='';render2();toast('户型图已更新')};im.onerror=function(){toast('图片读取失败')};im.src=r.result};r.readAsDataURL(f)});
+$('pc2').onclick=function(){delete PL[cur];Object.keys(ZP).forEach(function(k){if(k.indexOf(cur+':')==0)delete ZP[k]});psv();render2();toast('已恢复演示户型')};
+var TH=[['cloud','云雾蓝','#4f86a8','#f6f1e8'],['sage','鼠尾草绿','#6f9275','#f6f3ec'],['deep','深海蓝','#1d4e7a','#f1f5f9'],['cocoa','可可棕','#8a5a3c','#faf3e6'],['dusk','暮山灰','#6e7385','#f8efec'],['pine','松针绿','#2f6b55','#eef0ef']];
+function setTh(k){document.documentElement.setAttribute('data-theme',k);document.querySelectorAll('.sw').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.th==k)});try{localStorage.setItem('guard_theme',k)}catch(e){}}
+$('thl').innerHTML=TH.map(function(t){return '<button type="button" class="sw" data-th="'+t[0]+'" aria-pressed="false"><i style="background:linear-gradient(135deg,'+t[2]+' 50%,'+t[3]+' 50%)"></i>'+t[1]+'</button>'}).join('');
+var st='cloud';try{st=localStorage.getItem('guard_theme')||'cloud'}catch(e){}setTh(st);
+$('gn').value=G.name;$('gt').value=G.tel;$('gr').value=G.rule;$('hi').textContent=G.name+'，您好';
+render();
+</script>
+</body>
+</html>
