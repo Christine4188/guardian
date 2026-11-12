@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>无感知见 · 守护</title>
+<style>
+:root{--bg:#f6f1e8;--card:#fffdf9;--tx:#26323d;--mut:#76828c;--bd:#e6dccb;--ac:#4f86a8;--ac2:#dbe8f1;--ok:#4caf7a;--wn:#e8a13a;--dg:#e5484d;--soft:#f1ebdf;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+:root[data-theme="sage"]{--bg:#f6f3ec;--card:#fdfcf8;--tx:#2f3a30;--mut:#7a8576;--bd:#e2dfd1;--ac:#6f9275;--ac2:#dfe9dc;--soft:#eef0e6}
+:root[data-theme="deep"]{--bg:#f1f5f9;--card:#ffffff;--tx:#0f2a43;--mut:#6a7f93;--bd:#d6e0ea;--ac:#1d4e7a;--ac2:#d5e3f1;--soft:#e8eff6}
+:root[data-theme="cocoa"]{--bg:#faf3e6;--card:#fffbf2;--tx:#3b2a20;--mut:#8a7464;--bd:#ead9c0;--ac:#8a5a3c;--ac2:#f1e0c8;--soft:#f5ead8}
+:root[data-theme="dusk"]{--bg:#f8efec;--card:#fffaf8;--tx:#3a3a44;--mut:#85808a;--bd:#ecdad4;--ac:#6e7385;--ac2:#f5dfd6;--soft:#f6e8e2}
+:root[data-theme="pine"]{--bg:#eef0ef;--card:#fafbfa;--tx:#1f3029;--mut:#6f7d76;--bd:#d8dedb;--ac:#2f6b55;--ac2:#d9e6df;--soft:#e5eae7}
+.thg{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.sw{border:2px solid var(--bd);background:var(--card);color:var(--tx);border-radius:14px;padding:8px 2px;font:inherit;font-size:12px}.sw i{display:block;width:36px;height:36px;border-radius:50%;margin:0 auto 4px;border:1px solid var(--bd)}.sw[aria-pressed=true]{border-color:var(--ac);font-weight:700}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.6 "PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",sans-serif}
+#app{max-width:480px;margin:0 auto;min-height:100dvh;padding:14px 14px 84px}
+h1{font-size:19px;margin:0}h2{font-size:15px;margin:0 0 10px}
+.mut{color:var(--mut);font-size:13px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:18px;padding:16px;margin-top:12px;box-shadow:0 2px 10px rgba(240,138,60,.08)}
+.top{display:flex;justify-content:space-between;align-items:center}
+.eld{display:flex;gap:8px;margin-top:12px;overflow-x:auto}
+.eld button{flex:none;border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:99px;padding:6px 14px;font:inherit;display:flex;gap:6px;align-items:center}
+.eld button[aria-pressed=true]{background:var(--ac);border-color:var(--ac);color:#fff}
+.dot{width:9px;height:9px;border-radius:50%;display:inline-block}
+.hero{background:linear-gradient(135deg,var(--ac2),var(--card));display:flex;gap:16px;align-items:center}
+.ring{position:relative;width:96px;height:96px;flex:none}.ring b{position:absolute;inset:0;display:grid;place-items:center;font-size:28px}
+.lv{display:inline-block;color:#fff;border-radius:99px;padding:0 10px;font-size:12px;font-weight:600}
+.row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:12px}
+.row div{background:var(--soft);border-radius:12px;padding:8px 10px}.row span{font-size:12px;color:var(--mut);display:block}.row b{font-size:17px}
+#ban{display:none;margin-top:12px;background:var(--dg);color:#fff;border-radius:16px;padding:12px 14px}
+#ban button{margin-top:8px;background:#fff;color:var(--dg);border:0;border-radius:10px;padding:6px 14px;font:inherit;font-weight:600}
+.acts{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px}
+.acts button{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:10px 2px;color:var(--tx);font:inherit;font-size:13px}
+.acts button i{display:block;font-style:normal;line-height:0;margin-bottom:5px}
+.acts .d{border-color:var(--dg);color:var(--dg)}
+ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.ev{display:grid;grid-template-columns:48px 1fr;gap:8px;padding:8px 10px;border-radius:10px;background:var(--soft);border-left:4px solid var(--ok)}
+.ev.wn{border-color:var(--wn)}.ev.dg{border-color:var(--dg)}.ev time{color:var(--mut);font-size:12px}
+.fac div{display:grid;grid-template-columns:120px 1fr 28px;gap:8px;align-items:center;font-size:13px;margin-bottom:6px}
+.bar{height:8px;border-radius:4px;background:var(--soft);overflow:hidden}.bar i{display:block;height:100%;background:var(--ac);border-radius:4px}
+.kp{display:grid;grid-template-columns:1fr 1fr;gap:8px}.kp div{background:var(--soft);border-radius:12px;padding:10px}.kp span{font-size:12px;color:var(--mut);display:block}.kp b{font-size:20px}
+svg{display:block;width:100%;height:auto}
+.tk{display:flex;gap:10px;align-items:center;padding:10px;border-radius:12px;background:var(--soft)}
+.tk input{width:20px;height:20px;accent-color:var(--ac)}.tk.done span{text-decoration:line-through;color:var(--mut)}.tk em{margin-left:auto;font-style:normal;font-size:12px;color:var(--mut)}.tk em.late{color:var(--dg)}
+.msg{background:var(--soft);border-radius:12px;padding:8px 12px;font-size:14px}.msg small{color:var(--mut);display:block}
+.send{display:flex;gap:8px;margin-top:10px}
+input.in,select.in{flex:1;width:100%;border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:10px;padding:9px 12px;font:inherit}
+.btn{border:0;background:var(--ac);color:#fff;border-radius:10px;padding:9px 16px;font:inherit;font-weight:600}
+.btn.o{background:var(--card);color:var(--tx);border:1px solid var(--bd)}
+label.f{display:block;margin-bottom:10px;font-size:13px;color:var(--mut)}label.f>*{margin-top:4px;color:var(--tx)}
+.chk{display:flex;gap:14px;margin:6px 0 10px}.chk label{display:flex;gap:4px;align-items:center}.chk input{accent-color:var(--ac)}
+.esc{display:grid;gap:6px;font-size:13px}.esc div{background:var(--soft);border-radius:10px;padding:6px 10px}
+nav{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--bd);padding:6px 8px calc(6px + env(safe-area-inset-bottom,0px));z-index:5}
+nav div{max-width:480px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr)}
+nav button{border:0;background:none;color:var(--mut);font:inherit;font-size:12px;padding:4px}nav button i{display:block;font-style:normal;line-height:0;margin-bottom:3px}
+nav button[aria-pressed=true]{color:var(--ac);font-weight:700}
+#ts{position:fixed;left:50%;bottom:calc(80px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--tx);color:var(--bg);padding:8px 16px;border-radius:99px;font-size:13px;opacity:0;transition:.25s;pointer-events:none;z-index:30}
+#ts.on{opacity:1}
+.pg{display:none}.pg.on{display:block}
+.pr{display:grid;grid-template-columns:1fr auto 84px;gap:8px;padding:7px 0;border-bottom:1px dashed var(--bd);align-items:center}.pr em{font-style:normal;color:var(--mut);font-size:12px;text-align:right}
+.stk{display:flex;height:14px;border-radius:7px;overflow:hidden;margin:6px 0}.stk i{display:block;height:100%}.lgd{font-size:12px;color:var(--mut);display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.ev.fu{opacity:.55}.chips{display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap}
+.fl{padding:5px 12px;border-radius:99px;border:1px solid var(--bd);background:var(--card);color:var(--tx);font:inherit;font-size:13px}.fl[aria-pressed=true]{background:var(--ac);color:#fff;border-color:var(--ac)}
+#wv{width:100%;height:auto;display:block;margin-bottom:6px}
+.envg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.en{background:var(--soft);border-radius:12px;padding:8px 10px;border-left:4px solid var(--ok)}.en.s1{border-color:var(--wn)}.en.s2{border-color:var(--dg);animation:bk 1s infinite}.en span{font-size:12px;color:var(--mut);display:block}.en b{font-size:18px}.en small{font-size:11px;color:var(--mut);margin-left:2px}@keyframes bk{50%{opacity:.55}}@media(prefers-reduced-motion:reduce){.en.s2{animation:none}}
+.scn{display:flex;gap:8px;align-items:center;background:var(--soft);border-radius:12px;padding:8px 10px}.scn div{flex:1}.scn small{color:var(--mut);display:block;font-size:12px}.scn input{width:20px;height:20px;accent-color:var(--ac)}.scn .btn{padding:5px 10px;font-size:12px}
+/* 线性图标系统：统一 24 栅格、1.6 描边、随主题变色 */
+.ic{display:block;width:23px;height:23px;margin:0 auto;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.ic.sm{width:16px;height:16px;margin:0;display:inline-block;vertical-align:-2px;stroke-width:1.7}
+.btn .ic.sm{margin-right:6px;vertical-align:-3px}
+.privacy{display:inline-flex;align-items:center;gap:5px;flex:none;white-space:nowrap;font-size:11.5px;color:var(--mut);background:var(--card);border:1px solid var(--bd);border-radius:99px;padding:3px 10px 3px 7px}
+.privacy .ic.sm{width:13px;height:13px;vertical-align:0;stroke-width:1.8}
+#ban b{display:flex;align-items:center;gap:8px;font-size:16px;line-height:1.35}
+#bt .ic.sm{width:18px;height:18px;flex:none;stroke:#fff;vertical-align:0}
+/* 可点元素：按下有明确反馈 */
+.tap{cursor:pointer;-webkit-tap-highlight-color:transparent;transition:transform .12s ease,background .15s ease}
+.tap:active{transform:scale(.985)}
+.ev.tap:active,.msg.tap:active,.en.tap:active{background:var(--bd)}
+#tr circle,#pc rect,#fp rect{cursor:pointer}
+/* 底部详情面板 */
+#sh{position:fixed;inset:0;background:rgba(24,30,36,.34);opacity:0;pointer-events:none;transition:opacity .2s;z-index:20}
+#sh.on{opacity:1;pointer-events:auto}
+#shd{position:fixed;left:0;right:0;bottom:0;max-width:480px;margin:0 auto;background:var(--card);border-radius:22px 22px 0 0;padding:14px 16px calc(20px + env(safe-area-inset-bottom,0px));transform:translateY(118%);transition:transform .26s cubic-bezier(.2,.8,.2,1);z-index:21;box-shadow:0 -8px 28px rgba(38,50,61,.18)}
+#shd.on{transform:translateY(0)}
+.shh{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px}
+.shg{width:38px;height:4px;border-radius:99px;background:var(--bd);margin:0 auto 10px}
+.shh h3{margin:0;font-size:16px}
+#shx{border:0;background:var(--soft);color:var(--mut);border-radius:99px;padding:4px 12px;font:inherit;font-size:12px}
+.shv{display:flex;align-items:center;gap:10px;padding:2px 0 8px;flex-wrap:wrap}
+.shv b{font-size:26px;line-height:1.15;font-weight:700}
+.shv b small{font-size:12px;color:var(--mut);margin-left:3px;font-weight:400}
+.shv span{border:1px solid;border-radius:99px;padding:1px 10px;font-size:12px;white-space:nowrap;flex:none}
+.shr{display:flex;justify-content:space-between;align-items:baseline;gap:14px;padding:8px 0;border-bottom:1px dashed var(--bd);font-size:13px}
+.shr span{color:var(--mut);flex:none}
+.shr b{text-align:right;font-weight:600}
+</style>
+</head>
+<body>
+<div id="app">
+ <div class="top"><div><h1>守护 · 无感知见</h1><span class="mut" id="hi"></span></div><span class="privacy tap" data-pv="1"><svg class="ic sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10.2" width="14" height="9.6" rx="2.6"/><path d="M8.6 10.2V7.9a3.4 3.4 0 0 1 6.8 0v2.3"/></svg>无摄像头 · 保护隐私</span></div>
+ <div class="eld" id="eld"></div>
+
+ <section class="pg on" id="p0">
+  <div id="ban"><b id="bt"></b><div class="mut" style="color:#fff;opacity:.9;font-size:12px">5 分钟未确认将追加短信与微信，10 分钟未确认将电话并通知社区上门</div><button id="bx" type="button">我已知晓，去处理</button></div>
+  <div class="card hero"><div class="ring"><svg viewBox="0 0 96 96"><circle cx="48" cy="48" r="40" fill="none" stroke="var(--bd)" stroke-width="9"/><circle id="rg" cx="48" cy="48" r="40" fill="none" stroke-width="9" stroke-linecap="round" stroke-dasharray="251" transform="rotate(-90 48 48)"/></svg><b id="rn"></b></div>
+   <div><div class="mut">今日异常风险</div><span class="lv" id="rl"></span><p style="margin:6px 0 0" id="rs"></p></div></div>
+  <div class="card"><h2>居家位置（户型示意）</h2><div id="fp"></div><p class="mut" id="fph" style="margin:6px 0 0"></p></div>
+  <div class="row"><div><span>当前位置</span><b id="rm"></b></div><div><span>状态</span><b id="ac"></b></div><div><span>已持续</span><b id="du"></b></div></div>
+  <div class="acts">
+   <button data-a="call" type="button"><i><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a1.999 1.999 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></i>打电话</button>
+   <button data-a="greet" type="button"><i><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10v4M8 7v10M12 4.6v14.8M16 7v10M20 10v4"/></svg></i>语音问候</button>
+   <button data-a="visit" type="button"><i><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.6 10.4 12 3.8l8.4 6.6"/><path d="M6.1 9.8v9.8h11.8V9.8"/><rect x="9.7" y="13.7" width="4.6" height="5.9" rx="1"/></svg></i>请人探访</button>
+   <button data-a="notify" class="d" type="button"><i><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8.4a6 6 0 0 0-12 0c0 7-3 8.6-3 8.6h18s-3-1.6-3-8.6"/><path d="M13.7 20.6a2 2 0 0 1-3.4 0"/></svg></i>一键通知</button>
+  </div>
+  <div class="card"><h2>事件与提醒</h2><div class="chips"><button class="fl" data-f="" aria-pressed="true" type="button">全部</button><button class="fl" data-f="wn" aria-pressed="false" type="button">需关注</button><button class="fl" data-f="dg" aria-pressed="false" type="button">高危</button></div><ul id="al"></ul></div>
+ </section>
+
+ <section class="pg" id="p1">
+  <div class="card"><h2>风险趋势与 3 日预测</h2><div id="tr"></div><div class="mut">橙色实线为近 7 天，虚线为预测，红线 70 分为预警线</div></div>
+  <div class="card"><h2>主要风险原因</h2><div class="fac" id="fc"></div></div>
+  <div class="card"><h2>身体指标（雷达非接触估算）</h2><canvas id="wv" width="600" height="130"></canvas><div class="mut" style="margin-bottom:8px">上：呼吸 · 下：心跳（模拟波形）</div><div class="kp" id="vt"></div><p class="mut" style="margin:8px 0 0">不测血压血氧，仅作日常参考，非医疗诊断。</p></div>
+  <div class="card"><h2>未来 24 小时高危时段</h2><p id="pk" style="margin:0 0 8px"></p><svg id="pc" viewBox="0 0 300 80"></svg><div class="mut">红色柱为高危窗口（概率 60% 以上），黑框为当前小时</div></div>
+  <div class="card"><h2>行为画像：今日 vs 30 天基线</h2><div id="pf"></div><p class="mut" style="margin:8px 0 0">红色表示偏离基线 20% 以上</p></div>
+  <div class="card"><h2>睡眠与步态</h2><div class="stk" id="sk"></div><div class="lgd" id="sg"></div><div class="kp" id="sp"></div></div>
+  <div class="card"><h2>今日生活时间线</h2><ul id="tl"></ul></div>
+  <div class="card"><h2>行为风险报告</h2><div class="chips"><button class="fl" data-p="d" aria-pressed="true" type="button">日报</button><button class="fl" data-p="w" aria-pressed="false" type="button">周报</button><button class="fl" data-p="m" aria-pressed="false" type="button">月报</button><button class="fl" data-p="y" aria-pressed="false" type="button">年报</button></div><div class="kp" id="rk"></div><p class="mut" id="rs2" style="margin:8px 0 0"></p><button class="btn" id="rsd" type="button" style="margin-top:10px">发送给护理圈</button></div>
+ </section>
+
+ <section class="pg" id="p2">
+  <div class="card"><h2>快捷关怀</h2><div class="send"><select class="in" id="xg"><option>早安问候</option><option>吃药提醒</option><option>喝水提醒</option><option>晚安问候</option></select><button class="btn" data-q="g" type="button"><svg class="ic sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10v4M8 7v10M12 4.6v14.8M16 7v10M20 10v4"/></svg>播放</button></div><div class="send"><select class="in" id="xv"><option>今天下午</option><option>明天上午</option><option>本周内</option></select><button class="btn" data-q="v" type="button"><svg class="ic sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.6 10.4 12 3.8l8.4 6.6"/><path d="M6.1 9.8v9.8h11.8V9.8"/><rect x="9.7" y="13.7" width="4.6" height="5.9" rx="1"/></svg>申请探访</button></div><p class="mut" id="xs" style="margin:8px 0 0"></p></div>
+  <div class="card"><h2>服药与照护任务 <span class="mut" id="pg"></span></h2><div class="bar" style="margin-bottom:10px"><i id="pb" style="width:0"></i></div><ul id="tk"></ul></div>
+  <div class="card"><h2>护理圈留言</h2><ul id="ms"></ul><div class="send"><input class="in" id="mi" maxlength="80" placeholder="给家人和护理员留言…"><button class="btn" id="mb" type="button">发送</button></div></div>
+  <div class="card"><h2>护理圈成员</h2><ul id="mem"></ul></div>
+ </section>
+
+ <section class="pg" id="p5">
+  <div class="card"><h2>环境传感 <span class="mut">更新 <span id="et">--:--</span></span></h2><div class="envg" id="en"></div><button class="btn o" id="bump" type="button" style="margin-top:10px">模拟超限</button></div>
+  <div class="card"><h2>联动场景</h2><ul id="scl"></ul></div>
+  <div class="card"><h2>区域规则</h2><ul id="rll"></ul><p class="mut" style="margin:8px 0 0">阈值可按个人基线自适应调整。</p></div>
+  <div class="card"><h2>设备状态</h2><ul id="dvl"></ul><p class="mut" style="margin:8px 0 0">演示数据，接入真实设备后显示实时状态。</p></div>
+ </section>
+ <section class="pg" id="p3">
+  <div class="card"><h2>主题色彩</h2><div class="thg" id="thl"></div></div>
+  <div class="card"><h2>通知设置</h2>
+   <label class="f">监护人姓名<input class="in" id="gn"></label>
+   <label class="f">手机号（接收预警）<input class="in" id="gt" inputmode="numeric" maxlength="11"></label>
+   <div class="mut">通知方式</div><div class="chk"><label><input type="checkbox" value="短信" checked>短信</label><label><input type="checkbox" value="微信" checked>微信</label><label><input type="checkbox" value="电话">电话</label></div>
+   <label class="f">什么时候通知我<select class="in" id="gr"><option value="fall">仅跌倒</option><option value="high" selected>高危（评分 70 以上）与高峰预警</option><option value="watch">需关注（评分 45 以上）</option></select></label>
+   <div style="display:flex;gap:8px"><button class="btn" id="gs" type="button">保存</button><button class="btn o" id="gtst" type="button">发送测试消息</button></div></div>
+  <div class="card"><h2>预警升级策略</h2><div class="esc"><div><b>L1 立即</b> App 推送给你</div><div><b>L2 5 分钟未确认</b> 短信 + 微信</div><div><b>L3 10 分钟未确认</b> 电话 + 通知社区上门</div></div></div>
+  <div class="card"><h2>户型图定制 <span class="mut" id="pln"></span></h2><img id="pvi" alt="已上传户型图预览" style="display:none;width:100%;border-radius:12px;margin-bottom:10px"><label class="f">为当前老人上传户型图<input class="in" id="pu" type="file" accept="image/png,image/jpeg,image/webp"></label><p class="mut" style="margin:0 0 10px">支持 PNG、JPG、WebP，按 3:2 适配，将作为首页“居家位置”的底图。上传后在首页点击图片，可标定老人当前所在房间的位置。</p><button class="btn o" id="pc2" type="button">恢复演示户型</button></div>
+  <div class="card"><h2>设备与演示</h2><p class="mut" style="margin:0 0 10px">主雷达：演示在线 · 覆盖卧室、客厅、厨房、卫生间</p><button class="btn o" id="demo" type="button">模拟一次跌倒预警</button></div>
+ </section>
+</div>
+<nav><div id="nv">
+ <button data-t="0" aria-pressed="true" type="button"><i><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.4 10.5 12 3.8l8.6 6.7"/><path d="M5.9 9.9v9.7h12.2V9.9"/></svg></i>首页</button>
+ <button data-t="1" aria-pressed="false" type="button"><i><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8l1.1 1.1L12 21.2l7.8-7.8 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg></i>健康</button>
+ <button data-t="2" aria-pressed="false" type="button"><i><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/></svg></i>关爱</button>
+ <button data-t="3" aria-pressed="false" type="button"><i><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="5" width="14" height="14" rx="2.6"/><rect x="9.6" y="9.6" width="4.8" height="4.8" rx="1.2"/><path d="M9 2.6v2.4M15 2.6v2.4M9 19v2.4M15 19v2.4M2.6 9h2.4M2.6 15h2.4M19 9h2.4M19 15h2.4"/></svg></i>家居</button>
+ <button data-t="4" aria-pressed="false" type="button"><i><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></i>我的</button>
+</div></nav>
+<div id="ts" role="status"></div>
+<div id="sh" aria-hidden="true"><div id="shd"><div class="shg"></div><div class="shh"><h3 id="sht"></h3><button id="shx" type="button">关闭</button></div><div id="shb"></div></div></div>
+<script>
+var $=function(i){return document.getElementById(i)};
+var E=[
+{n:'王秀兰',a:78,r:34,tr:[30,31,29,33,32,34,34],pr:[35,36,37],room:'客厅',act:'静坐',min:42,v:[16,72,'7.2 小时','1.0 米/秒'],pk:'预计 15:00–17:00 活动偏少，请留意',f:[['夜间起夜次数增加',18],['步速轻微下降',12],['厨房活动稳定',4]],al:[['10:42','','午后静坐时长略高于基线'],['07:15','','晨起时间正常']],tk:[['08:00 降压药',1],['12:30 午餐后散步',0],['20:00 降压药',0]]},
+{n:'李建国',a:82,r:61,tr:[48,50,52,55,57,59,61],pr:[64,67,71],room:'卧室',act:'卧床',min:95,v:[18,76,'5.8 小时','0.8 米/秒'],pk:'预计 02:00–05:00 夜间如厕风险较高',f:[['夜间如厕次数明显增多',28],['白天卧床时长上升',22],['步速下降',11]],al:[['09:30','wn','近 3 日夜间如厕 4 次以上'],['昨天','wn','白天卧床总计 5.2 小时，高于基线'],['07:50','','晨起时间偏晚 40 分钟']],tk:[['08:00 降糖药',1],['12:00 测血糖',0],['19:00 降糖药',0]]},
+{n:'陈桂英',a:85,r:78,tr:[55,60,63,66,70,74,78],pr:[81,84,86],room:'卫生间',act:'停留',min:38,v:[19,84,'5.1 小时','0.6 米/秒'],pk:'预计 11:00–13:00 及 23:00–03:00 为高危窗口',f:[['步速持续下降',30],['夜间离床次数异常',26],['卫生间停留过长',16],['厨房无活动 36 小时',6]],al:[['11:05','dg','卫生间停留 38 分钟，超过基线 3 倍'],['昨天','wn','厨房连续 36 小时无烹饪活动'],['11/05','wn','夜间活动节律异常 2 次']],tk:[['08:00 降压药',1],['12:00 午餐（厨房无活动）',0],['20:00 降压药',0]]}];
+var mem=[['女儿 · 王丽','监护人'],['社区护理员 · 张姐','每周探访'],['邻居 · 刘阿姨','紧急联系人']];
+var cur=0,msgs=[[['系统','今日 11:05','陈桂英卫生间停留超过基线 3 倍']],[],[]],G={name:'王丽',tel:'',rule:'high'};
+try{var sv=JSON.parse(localStorage.getItem('guard_cfg')||'null');if(sv)G=sv}catch(e){}
+function toast(t){var s=$('ts');s.textContent=t;s.className='on';clearTimeout(toast.t);toast.t=setTimeout(function(){s.className=''},2200)}
+function lv(r){return r>=70?['高危','var(--dg)','建议现在联系，必要时请人上门看看']:r>=45?['需关注','var(--wn)','近期有变化，留意今日状态']:['低风险','var(--ok)','一切平稳，无需特别处理']}
+function trend(e){var all=e.tr.concat(e.pr),W=320,H=130,x=function(i){return 20+i*(W-40)/9},y=function(v){return H-14-(v-20)/80*(H-30)};
+ var h=e.tr.map(function(v,i){return x(i)+','+y(v)}).join(' '),p=[e.tr[6]].concat(e.pr).map(function(v,i){return x(i+6)+','+y(v)}).join(' ');
+ return '<svg viewBox="0 0 '+W+' '+H+'"><line x1="20" x2="300" y1="'+y(70)+'" y2="'+y(70)+'" stroke="var(--dg)" stroke-dasharray="3 3"/><polyline fill="none" stroke="var(--ac)" stroke-width="3" stroke-linecap="round" points="'+h+'"/><polyline fill="none" stroke="var(--wn)" stroke-width="3" stroke-dasharray="5 5" points="'+p+'"/>'+all.map(function(v,i){return '<circle cx="'+x(i)+'" cy="'+y(v)+'" r="4" fill="'+(i>6?'var(--wn)':'var(--ac)')+'" data-x="'+i+'"/>'}).join('')+'<text x="'+x(6)+'" y="'+(y(all[6])-8)+'" font-size="11" text-anchor="middle" fill="var(--tx)">今天</text></svg>'}
+function ev(a){return '<li class="ev tap '+(a[1]||'')+'" data-ev="1" data-et="'+a[0]+'" data-es="'+(a[1]||'ok')+'" data-ex="'+a[2]+'"><time>'+a[0]+'</time><span>'+a[2]+'</span></li>'}
+function render(){var e=E[cur],L=lv(e.r);
+ $('eld').innerHTML=E.map(function(x,i){return '<button type="button" data-i="'+i+'" aria-pressed="'+(i==cur)+'"><span class="dot" style="background:'+lv(x.r)[1]+'"></span>'+x.n+'</button>'}).join('');
+ $('rn').textContent=e.r;$('rg').style.stroke=L[1];$('rg').style.strokeDashoffset=251*(1-e.r/100);
+ $('rl').textContent=L[0];$('rl').style.background=L[1];$('rs').textContent=L[2];
+ $('rm').textContent=e.room;$('ac').textContent=e.act;$('du').textContent=e.min+' 分钟';
+ alf();
+ $('tr').innerHTML=trend(e);
+ $('fc').innerHTML=e.f.map(function(f){return '<div><span>'+f[0]+'</span><span class="bar"><i style="width:'+Math.min(100,f[1]*3)+'%"></i></span><em style="font-style:normal;text-align:right">'+f[1]+'</em></div>'}).join('');
+ var n=['呼吸（次/分）','心率（次/分）','昨夜睡眠','步速'];$('vt').innerHTML=e.v.map(function(v,i){return '<div><span>'+n[i]+'</span><b>'+v+'</b></div>'}).join('');
+ $('pk').textContent=e.pk;
+ var b=$('ban');if(e.r>=70&&!e.ack){b.style.display='block';$('bt').innerHTML='<svg class="ic sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg><span>'+e.n+'：'+e.al[0][2]+'</span>'}else b.style.display='none';
+ tasks();msgl();$('mem').innerHTML=mem.map(function(m,i){return '<li class="msg tap" data-m="'+i+'"><b>'+m[0]+'</b><small>'+m[1]+'</small></li>'}).join('');render2()}
+function tasks(){var e=E[cur],d=e.tk.filter(function(t){return t[1]}).length,h=new Date().getHours();
+ $('pg').textContent=d+'/'+e.tk.length;$('pb').style.width=d/e.tk.length*100+'%';
+ $('tk').innerHTML=e.tk.map(function(t,i){var hr=parseInt(t[0]),late=!t[1]&&hr+1<=h;return '<li><label class="tk'+(t[1]?' done':'')+'"><input type="checkbox" data-k="'+i+'"'+(t[1]?' checked':'')+'><span>'+t[0]+'</span>'+(late?'<em class="late">已超时</em>':t[1]?'<em>已完成</em>':'')+'</label></li>'}).join('')}
+function msgl(){$('ms').innerHTML=msgs[cur].length?msgs[cur].map(function(m){return '<li class="msg"><small>'+m[0]+' · '+m[1]+'</small>'+m[2]+'</li>'}).join(''):'<li class="mut">暂无留言</li>'}
+function tm(){var d=new Date();return ('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2)}
+document.addEventListener('click',function(ev){var t=ev.target.closest('button,input,[data-e],[data-d],[data-m],[data-h],[data-x],[data-ev],[data-pv],[data-tl]');if(!t)return;
+ if(t.id=='shx'){closeSheet();return}
+ if(t.dataset.pv){pvSheet();return}
+ if(t.dataset.go=='care'){closeSheet();document.querySelector('[data-t="2"]').click();setTimeout(function(){$('mi').focus()},300);return}
+ if(t.dataset.e!=null){enSheet(+t.dataset.e);return}
+ if(t.dataset.d!=null){dvSheet(+t.dataset.d);return}
+ if(t.dataset.m!=null){mbSheet(+t.dataset.m);return}
+ if(t.dataset.h!=null){hrSheet(+t.dataset.h);return}
+ if(t.dataset.x!=null){trSheet(+t.dataset.x);return}
+ if(t.dataset.ev!=null){evSheet(t);return}
+ if(t.dataset.tl){tlSheet(t);return}
+ if(t.dataset.i!=null){cur=+t.dataset.i;render()}
+ else if(t.dataset.t!=null){var k=+t.dataset.t;document.querySelectorAll('.pg').forEach(function(p,i){p.className='pg'+(i==k?' on':'')});document.querySelectorAll('#nv button').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.t==k)});scrollTo(0,0)}
+ else if(t.dataset.a){var n=E[cur].n,a=t.dataset.a;
+  if(a=='call')toast('正在呼叫 '+n+'（待接入通话服务）');
+  if(a=='greet')toast('已向 '+n+' 家中播放语音问候');
+  if(a=='visit'){toast('已请社区护理员上门探访 '+n);msgs[cur].unshift(['系统',tm(),G.name+' 申请上门探访']);msgl()}
+  if(a=='notify'){toast('已通知护理圈全部成员');msgs[cur].unshift(['系统',tm(),G.name+' 发起一键通知']);msgl()}}
+ else if(t.id=='bx'){E[cur].ack=1;render();toast('已确认，请尽快联系 '+E[cur].n)}
+ else if(t.dataset.k!=null){E[cur].tk[+t.dataset.k][1]=t.checked?1:0;tasks()}
+ else if(t.id=='mb'){var v=$('mi').value.trim();if(!v)return;msgs[cur].unshift([G.name,tm(),v]);$('mi').value='';msgl()}
+ else if(t.id=='gs'){G.name=$('gn').value||G.name;G.tel=$('gt').value;G.rule=$('gr').value;G.ch=[].slice.call(document.querySelectorAll('.chk input')).filter(function(x){return x.checked}).map(function(x){return x.value}).join(',');try{localStorage.setItem('guard_cfg',JSON.stringify(G))}catch(e){}$('hi').textContent=G.name+'，您好';toast('设置已保存')}
+ else if(t.dataset.th){setTh(t.dataset.th)}
+ else if(t.dataset.f!=null){FL=t.dataset.f;alf()}
+ else if(t.dataset.p){PR=t.dataset.p;rep()}
+ else if(t.dataset.sc){toast('已试运行：'+SC[+t.dataset.sc][0]+'（演示）')}
+ else if(t.dataset.sw){ST[t.dataset.sw]=t.checked?1:0;toast(t.checked?'已开启':'已关闭')}
+ else if(t.dataset.q=='g'){toast('已向 '+E[cur].n+' 家中播放：'+$('xg').value)}
+ else if(t.dataset.q=='v'){var vs=$('xv').value;$('xs').textContent='已申请“'+vs+'”上门探访，等待社区护理员确认';msgs[cur].unshift(['系统',tm(),G.name+' 申请上门探访：'+vs]);msgl();toast('已提交探访申请')}
+ else if(t.id=='rsd')toast('报告已发送给护理圈')
+ else if(t.id=='bump'){bump=1;env();setTimeout(function(){bump=0},6000)}
+ else if(t.id=='gtst')toast('测试消息已发送（演示）')
+ else if(t.id=='demo'){var e=E[cur];e.al.unshift([tm(),'dg','检测到跌倒：高度骤降后静卧超过 3 秒']);e.r=Math.max(e.r,82);e.act='疑似跌倒';e.ack=0;render();document.querySelector('[data-t="0"]').click()}});
+var X=[{pf:[['起夜次数','次',2,1,1],['白天卧床','小时',1.5,1.5,1],['步速','米/秒',1,1.1,-1],['厨房活动','次',3,3,-1],['卫生间停留','分钟',12,10,1]],sl:[18,22,2,0,.55,2.1],pk:[15,16,17],tl:[['07:15','起床，晨起正常'],['08:00','服药 · 早餐（厨房）'],['10:42','客厅静坐'],['12:30','午餐'],['15:00','午休'],['20:00','晚间服药']]},
+{pf:[['起夜次数','次',4,2,1],['白天卧床','小时',5.2,3,1],['步速','米/秒',.8,.95,-1],['厨房活动','次',2,3,-1],['卫生间停留','分钟',15,12,1]],sl:[14,17,4,1,.48,3],pk:[2,3,4,5],tl:[['07:50','起床（偏晚 40 分钟）'],['08:00','服药（降糖）'],['09:30','卧床休息'],['12:00','测血糖'],['14:00','午休'],['19:00','晚间服药']]},
+{pf:[['起夜次数','次',3,1,1],['白天卧床','小时',3.5,2.5,1],['步速','米/秒',.6,.8,-1],['厨房活动','次',0,3,-1],['卫生间停留','分钟',38,12,1]],sl:[10,15,5,3,.4,4.2],pk:[11,12,23,0,1,2,3],tl:[['07:30','起床'],['08:00','服药（降压）'],['11:05','卫生间停留 38 分钟'],['12:00','午餐（厨房无活动）'],['15:00','午休'],['20:00','晚间服药']]}];
+var FL='',PR='d',bump=0,ST={},EN=[];
+var SC=[['夜间起夜','自动开小夜灯并记录次数',1],['卫生间久留','超 30 分钟提醒并通知我',1],['疑似跌倒','呼叫老人、通知护理圈、解锁门禁',1],['地面湿度高','启动排风并提醒防滑',0]],RL=[['卫生间停留超过 30 分钟',1],['夜间离床超过 3 次',1],['厨房 24 小时无活动',1],['白天卧床超过 4 小时',0],['久坐超过 2 小时',1]],DV=[['主雷达 · 客厅','在线','信号良好'],['卫生间雷达','在线','信号良好'],['卧室雷达','在线','信号良好'],['小夜灯','在线','电量 82%'],['烟感报警器','在线','电量 64%'],['智能门锁','离线','请检查电池']];
+function alf(){var l=E[cur].al.filter(function(a){return !FL||a[1]==FL});$('al').innerHTML=l.length?l.map(ev).join(''):'<li class="mut">暂无记录</li>';document.querySelectorAll('[data-f]').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.f==FL)})}
+function fp(e,c){var R=[['卧室',10,10,110,80],['客厅',120,10,170,80],['厨房',10,90,110,70],['卫生间',120,90,80,70],['玄关',200,90,90,70]],s='<svg viewBox="0 0 300 170">';R.forEach(function(r){var on=r[0]==e.room;s+='<rect x="'+r[1]+'" y="'+r[2]+'" width="'+r[3]+'" height="'+r[4]+'" rx="6" fill="'+(on?'var(--ac2)':'var(--soft)')+'" stroke="var(--bd)" stroke-width="2"/><text x="'+(r[1]+8)+'" y="'+(r[2]+18)+'" font-size="12" fill="var(--mut)">'+r[0]+'</text>';if(on){var cx=r[1]+r[3]/2,cy=r[2]+r[4]/2+6;s+='<circle cx="'+cx+'" cy="'+cy+'" r="6" fill="'+c+'"><animate attributeName="r" values="6;20" dur="2s" repeatCount="indefinite"/><animate attributeName="opacity" values=".5;0" dur="2s" repeatCount="indefinite"/></circle><circle cx="'+cx+'" cy="'+cy+'" r="7" fill="'+c+'"/>'}});return s+'</svg>'}
+function rep(){var e=E[cur],a=Math.round(e.tr.reduce(function(s,v){return s+v},0)/7),m=Math.max.apply(0,e.tr),n=e.al.length,K={d:[e.r,Math.min(100,e.r+6),e.al.filter(function(x){return x[1]}).length],w:[a,m,n+1],m:[a-2,m+4,n*3],y:[a-6,m+10,n*12+4]}[PR];
+ $('rk').innerHTML=[['平均风险',K[0]],['峰值风险',K[1]],['预警次数',K[2]+' 次'],['范围',{d:'今日',w:'近 7 天',m:'近 30 天',y:'近 12 个月'}[PR]]].map(function(k){return '<div><span>'+k[0]+'</span><b>'+k[1]+'</b></div>'}).join('');
+ $('rs2').textContent='摘要：'+e.n+'的主要风险来自“'+e.f[0][0]+'”'+(e.r>=70?'，建议尽快联系并安排上门。':'，建议保持日常关注。')+'（演示数据）';
+ document.querySelectorAll('[data-p]').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.p==PR)})}
+function env(){var e=E[cur],bt=e.room=='卫生间',sl=e.room=='卧室',v=[['室温','℃',24+Math.random()-.5,function(v){return v<18||v>28?1:0},'18 – 28 ℃'],['湿度','%',55+Math.random()*4,function(v){return v<40||v>70?1:0},'40% – 70%'],['地面湿度','%',(bt?78:35)+Math.random()*3+bump*15,function(v){return v>85?2:v>75?1:0},'≤ 75%（卫生间更敏感）'],['CO₂','ppm',(sl?1050:700)+Math.random()*40+bump*600,function(v){return v>1500?2:v>1000?1:0},'≤ 1000 ppm'],['PM2.5','μg/m³',14+Math.random()*4+bump*60,function(v){return v>75?2:v>35?1:0},'≤ 35 μg/m³']];
+ EN=v;
+ $('en').innerHTML=v.map(function(i,k){return '<div class="en tap s'+i[3](i[2])+'" data-e="'+k+'"><span>'+i[0]+'</span><b>'+(i[1]=='℃'?i[2].toFixed(1):Math.round(i[2]))+'<small>'+i[1]+'</small></b></div>'}).join('');$('et').textContent=tm()}
+function render2(){var e=E[cur],x=X[cur],h=new Date().getHours(),s=x.sl;
+ $('fp').innerHTML=fp2(e,lv(e.r)[1]);pvu();$('pln').textContent='· '+e.n;$('fph').textContent=PL[cur]?'已使用自定义户型图 · 点击图片可重新标定当前房间位置':'演示户型 · 点击房间可切换演示位置，也可在“我的”里上传自己的户型图';
+ var bs='';for(var i=0;i<24;i++){var p=x.pk.indexOf(i)>-1?.62+.04*(i%3):.12+.03*((i*7)%5);bs+='<rect x="'+(6+i*12)+'" y="'+(62-p*55)+'" width="9" height="'+p*55+'" rx="2" fill="'+(p>=.6?'var(--dg)':'var(--ac2)')+'" data-h="'+i+'"'+(i==h?' stroke="var(--tx)" stroke-width="1.5"':'')+'/>'}
+ [0,6,12,18,23].forEach(function(i){bs+='<text x="'+(10+i*12)+'" y="76" font-size="9" text-anchor="middle" fill="var(--mut)">'+i+'时</text>'});$('pc').innerHTML=bs;
+ $('pf').innerHTML=x.pf.map(function(p){var w=p[4]*(p[2]-p[3])/p[3]>.2;return '<div class="pr"><span>'+p[0]+'</span><b'+(w?' style="color:var(--dg)"':'')+'>'+p[2]+' '+p[1]+'</b><em>基线 '+p[3]+'</em></div>'}).join('');
+ var lt=100-s[0]-s[1]-5,sg=[[s[0],'#6554bb','深睡'],[lt,'var(--ac)','浅睡'],[s[1],'#3ddc97','REM'],[5,'var(--wn)','清醒']];
+ $('sk').innerHTML=sg.map(function(g){return '<i style="width:'+g[0]+'%;background:'+g[1]+'"></i>'}).join('');
+ $('sg').innerHTML=sg.map(function(g){return '<span><span class="dot" style="background:'+g[1]+'"></span> '+g[2]+' '+g[0]+'%</span>'}).join('');
+ $('sp').innerHTML=[['总睡眠',e.v[2]],['夜间醒来',s[2]+' 次'],['呼吸暂停',s[3]+' 次'],['步速',e.v[3]],['步幅',s[4]+' 米'],['起身耗时',s[5]+' 秒']].map(function(k){return '<div><span>'+k[0]+'</span><b>'+k[1]+'</b></div>'}).join('');
+ $('tl').innerHTML=x.tl.map(function(t){var d=parseInt(t[0])<=h;return '<li class="ev tap'+(d?'':' fu')+'" data-tl="1" data-tt="'+t[0]+'" data-tx="'+t[1]+'" data-td="'+(d?1:0)+'"><time>'+t[0]+'</time><span>'+t[1]+(d?'':'（预计）')+'</span></li>'}).join('');
+ rep();env()}
+$('scl').innerHTML=SC.map(function(s,i){return '<li class="scn"><div><b>'+s[0]+'</b><small>'+s[1]+'</small></div><input type="checkbox" data-sw="s'+i+'"'+(s[2]?' checked':'')+' aria-label="启用"><button class="btn o" data-sc="'+i+'" type="button">试运行</button></li>'}).join('');
+$('rll').innerHTML=RL.map(function(r,i){return '<li class="scn"><div>'+r[0]+'</div><input type="checkbox" data-sw="r'+i+'"'+(r[1]?' checked':'')+' aria-label="启用"></li>'}).join('');
+$('dvl').innerHTML=DV.map(function(d,i){return '<li class="ev tap '+(d[1]=='在线'?'':'wn')+'" data-d="'+i+'"><time>'+d[1]+'</time><span>'+d[0]+' · '+d[2]+'</span></li>'}).join('');
+setInterval(env,2000);
+(function(){var c=$('wv'),g=c.getContext('2d'),t=0;
+ function wave(){var w=c.width,h=c.height,cs=getComputedStyle(document.documentElement);
+  g.clearRect(0,0,w,h);
+  g.lineWidth=2.4;g.strokeStyle=cs.getPropertyValue('--ac').trim();
+  g.beginPath();for(var x=0;x<=w;x+=2){var y=36+Math.sin(x*.013-t*.35)*11+Math.sin(x*.19+t*2.6)*1;x?g.lineTo(x,y):g.moveTo(x,y)}g.stroke();
+  g.lineWidth=2.2;g.strokeStyle=cs.getPropertyValue('--dg').trim();
+  g.beginPath();for(var z=0;z<=w;z+=2){var k=((z-t*22)%70+70)%70,spk=Math.exp(-Math.pow(k-12,2)/9)*27-Math.exp(-Math.pow(k-18,2)/11)*12+Math.exp(-Math.pow(k-34,2)/13)*6,vy=92-spk;z?g.lineTo(z,vy):g.moveTo(z,vy)}g.stroke();
+  t+=.06;requestAnimationFrame(wave)}
+ wave()})();
+var PL={},ZP={};try{PL=JSON.parse(localStorage.getItem('guard_plan')||'{}');ZP=JSON.parse(localStorage.getItem('guard_zp')||'{}')}catch(e){}
+function psv(){try{localStorage.setItem('guard_plan',JSON.stringify(PL));localStorage.setItem('guard_zp',JSON.stringify(ZP))}catch(e){toast('图片较大，仅本次有效')}}
+function pvu(){var i=$('pvi');i.style.display=PL[cur]?'block':'none';if(PL[cur])i.src=PL[cur]}
+function fp2(e,c){var im=PL[cur],R=[['卧室',10,10,110,90],['客厅',120,10,170,90],['厨房',10,100,110,90],['卫生间',120,100,80,90],['玄关',200,100,90,90]],s='<svg viewBox="0 0 300 200"'+(im?' style="cursor:crosshair"':'')+'>';
+ if(im)s+='<image href="'+im+'" width="300" height="200" preserveAspectRatio="xMidYMid slice"/>';
+ R.forEach(function(r){var on=r[0]==e.room;if(!im)s+='<rect x="'+r[1]+'" y="'+r[2]+'" width="'+r[3]+'" height="'+r[4]+'" rx="6" fill="'+(on?'var(--ac2)':'var(--soft)')+'" stroke="var(--bd)" stroke-width="2" data-r="'+r[0]+'"/><text x="'+(r[1]+8)+'" y="'+(r[2]+18)+'" font-size="12" fill="var(--mut)" data-r="'+r[0]+'">'+r[0]+'</text>';
+  if(on){var p=ZP[cur+':'+r[0]]||[r[1]+r[3]/2,r[2]+r[4]/2+6];s+='<circle cx="'+p[0]+'" cy="'+p[1]+'" r="6" fill="'+c+'"><animate attributeName="r" values="6;20" dur="2s" repeatCount="indefinite"/><animate attributeName="opacity" values=".5;0" dur="2s" repeatCount="indefinite"/></circle><circle cx="'+p[0]+'" cy="'+p[1]+'" r="7" fill="'+c+'" stroke="#fff" stroke-width="2"/>';if(im)s+='<text x="'+p[0]+'" y="'+(p[1]-14)+'" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" stroke="#000" stroke-width="3" paint-order="stroke">'+r[0]+'</text>'}});
+ return s+'</svg>'}
+$('fp').addEventListener('click',function(ev){
+ if(!PL[cur]){var rg=ev.target.closest('[data-r]');if(!rg)return;var nr=rg.getAttribute('data-r');if(nr==E[cur].room){sheet('当前位置 · '+nr,posSheet(E[cur]));return}E[cur].room=nr;render();toast('演示位置已切到“'+nr+'”');return}
+ var b=this.querySelector('svg').getBoundingClientRect();ZP[cur+':'+E[cur].room]=[(ev.clientX-b.left)/b.width*300,(ev.clientY-b.top)/b.height*200];psv();render2();toast('已标定“'+E[cur].room+'”位置')});
+$('pu').addEventListener('change',function(){var inp=this,f=inp.files[0];if(!f)return;if(!/^image\/(png|jpe?g|webp)$/.test(f.type)){toast('请选择 PNG、JPG 或 WebP 图片');return}
+ var r=new FileReader();r.onload=function(){var im=new Image();im.onload=function(){var c=document.createElement('canvas'),w=Math.min(900,im.width),h=Math.round(w*im.height/im.width);c.width=w;c.height=h;c.getContext('2d').drawImage(im,0,0,w,h);PL[cur]=c.toDataURL('image/jpeg',.82);Object.keys(ZP).forEach(function(k){if(k.indexOf(cur+':')==0)delete ZP[k]});psv();inp.value='';render2();toast('户型图已更新')};im.onerror=function(){toast('图片读取失败')};im.src=r.result};r.readAsDataURL(f)});
+$('pc2').onclick=function(){delete PL[cur];Object.keys(ZP).forEach(function(k){if(k.indexOf(cur+':')==0)delete ZP[k]});psv();render2();toast('已恢复演示户型')};
+var TH=[['cloud','云雾蓝','#4f86a8','#f6f1e8'],['sage','鼠尾草绿','#6f9275','#f6f3ec'],['deep','深海蓝','#1d4e7a','#f1f5f9'],['cocoa','可可棕','#8a5a3c','#faf3e6'],['dusk','暮山灰','#6e7385','#f8efec'],['pine','松针绿','#2f6b55','#eef0ef']];
+function setTh(k){document.documentElement.setAttribute('data-theme',k);document.querySelectorAll('.sw').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.th==k)});try{localStorage.setItem('guard_theme',k)}catch(e){}}
+$('thl').innerHTML=TH.map(function(t){return '<button type="button" class="sw" data-th="'+t[0]+'" aria-pressed="false"><i style="background:linear-gradient(135deg,'+t[2]+' 50%,'+t[3]+' 50%)"></i>'+t[1]+'</button>'}).join('');
+var st='cloud';try{st=localStorage.getItem('guard_theme')||'cloud'}catch(e){}setTh(st);
+$('gn').value=G.name;$('gt').value=G.tel;$('gr').value=G.rule;$('hi').textContent=G.name+'，您好';
+(function(){var ch=(G.ch||'短信,微信').split(',');document.querySelectorAll('.chk input').forEach(function(x){x.checked=ch.indexOf(x.value)>-1})})();
+/* —— 底部详情面板：所有"卡片型"元素点击后都有真实反馈 —— */
+function sheet(t,b){$('sht').textContent=t;$('shb').innerHTML=b;$('sh').className='on';$('shd').className='on'}
+function closeSheet(){$('sh').className='';$('shd').className=''}
+$('sh').addEventListener('click',function(e){if(e.target.id=='sh')closeSheet()});
+function tagc(s){return s=='dg'?['高危','var(--dg)']:s=='wn'?['需关注','var(--wn)']:['正常','var(--ok)']}
+function posSheet(e){return '<div class="shr"><span>当前房间</span><b>'+e.room+'</b></div><div class="shr"><span>状态</span><b>'+e.act+'</b></div><div class="shr"><span>已持续</span><b>'+e.min+' 分钟</b></div><div class="shr"><span>今日风险</span><b>'+e.r+' 分 · '+lv(e.r)[0]+'</b></div><p class="mut" style="margin:10px 0 0">演示模式下点击其他房间即可切换位置。</p>'}
+function pvSheet(){sheet('隐私设计说明','<div class="shr"><span>感知方式</span><b>毫米波雷达，不用摄像头</b></div><div class="shr"><span>采集内容</span><b>呼吸、心跳、位置、步态</b></div><div class="shr"><span>不做的事</span><b>不拍画面、不录音</b></div><div class="shr"><span>数据存放</span><b>本机存储（演示）</b></div><p class="mut" style="margin:10px 0 0">只用于跌倒与异常风险预警，不作医疗诊断。</p>')}
+function enSheet(k){var i=EN[k];if(!i)return;var s=i[3](i[2]),nm={0:'正常',1:'接近阈值',2:'已超限'}[s],cl={0:'var(--ok)',1:'var(--wn)',2:'var(--dg)'}[s],v=i[1]=='℃'?i[2].toFixed(1):Math.round(i[2]);
+ sheet(i[0]+' · '+E[cur].room,'<div class="shv"><b style="color:'+cl+'">'+v+'<small> '+i[1]+'</small></b><span style="border-color:'+cl+';color:'+cl+'">'+nm+'</span></div><div class="shr"><span>正常范围</span><b>'+i[4]+'</b></div><div class="shr"><span>采样位置</span><b>'+E[cur].room+'</b></div><div class="shr"><span>更新时间</span><b>'+tm()+'</b></div><div class="shr"><span>处理建议</span><b>'+(s==2?'已联动排风/加湿并提醒':'保持观察即可')+'</b></div><p class="mut" style="margin:10px 0 0">演示数据每 2 秒刷新，接入真实传感器后显示实测值。</p>')}
+function dvSheet(i){var d=DV[i];sheet(d[0],'<div class="shr"><span>状态</span><b style="color:'+(d[1]=='在线'?'var(--ok)':'var(--wn)')+'">'+d[1]+'</b></div><div class="shr"><span>说明</span><b>'+d[2]+'</b></div><div class="shr"><span>上报频率</span><b>'+(d[1]=='在线'?'2 秒 / 次':'—')+'</b></div><div class="shr"><span>建议</span><b>'+(d[1]=='在线'?'保持供电与网关连接':'更换电池或检查网关；离线期间不参与跌倒判定')+'</b></div>')}
+function evSheet(t){var s=t.dataset.es,L=tagc(s),adv=s=='dg'?'建议立即联系老人，必要时安排上门':s=='wn'?'偏离基线，建议当天多留意':'常规记录，仅作留存';
+ sheet('事件详情 · '+t.dataset.et,'<div class="shr"><span>级别</span><b style="color:'+L[1]+'">'+L[0]+'</b></div><div class="shr"><span>涉及老人</span><b>'+E[cur].n+'</b></div><div class="shr"><span>当前位置</span><b>'+E[cur].room+'</b></div><div class="shr"><span>处理建议</span><b>'+adv+'</b></div><p style="margin:12px 0 0">'+t.dataset.ex+'</p>')}
+function hrSheet(i){var x=X[cur],p=x.pk.indexOf(i)>-1?.62+.04*(i%3):.12+.03*((i*7)%5),dg=p>=.6,cl=dg?'var(--dg)':'var(--ac)';
+ sheet(i+':00 – '+((i+1)%24)+':00 时段风险','<div class="shv"><b style="color:'+cl+'">'+Math.round(p*100)+'<small> %</small></b><span style="border-color:'+cl+';color:'+cl+'">'+(dg?'高危窗口':'常规时段')+'</span></div><div class="shr"><span>历史同小时</span><b>'+(dg?'近 30 天多次出现异常':'多为平稳记录')+'</b></div><div class="shr"><span>建议</span><b>'+(dg?'提前问候，必要时安排陪护或开启小夜灯':'无需特别安排')+'</b></div><p class="mut" style="margin:10px 0 0">按近 30 天同小时行为分布估算，属概率提示而非确定预测。</p>')}
+function trSheet(i){var e=E[cur],all=e.tr.concat(e.pr),v=all[i],L=lv(v),lab=i<7?(i==6?'今天':(6-i)+' 天前'):'未来 '+(i-6)+' 天';
+ sheet('风险分值 · '+lab,'<div class="shv"><b style="color:'+L[1]+'">'+v+'<small> 分</small></b><span style="border-color:'+L[1]+';color:'+L[1]+'">'+L[0]+'</span></div><div class="shr"><span>数据性质</span><b>'+(i<7?'实测':'模型预测')+'</b></div><div class="shr"><span>计算口径</span><b>'+(i<7?'按当日行为偏离度结算':'基于近 7 天趋势外推')+'</b></div><p class="mut" style="margin:10px 0 0">'+L[2]+'</p>')}
+function tlSheet(t){var done=t.dataset.td=='1';sheet('时间线 · '+t.dataset.tt,'<div class="shr"><span>记录</span><b>'+t.dataset.tx+'</b></div><div class="shr"><span>状态</span><b style="color:'+(done?'var(--ok)':'var(--mut)')+'">'+(done?'已发生':'尚未到点，属预计安排')+'</b></div><div class="shr"><span>数据来源</span><b>雷达活动 + 家属手动记录</b></div>')}
+function mbSheet(i){var m=mem[i],role=m[1]=='监护人'?'接收预警、调整通知规则':m[1]=='每周探访'?'上门探访、代填照护任务':'就近第一响应';
+ sheet(m[0],'<div class="shr"><span>角色</span><b>'+m[1]+'</b></div><div class="shr"><span>负责老人</span><b>'+E[cur].n+'</b></div><div class="shr"><span>可做的事</span><b>'+role+'</b></div><button class="btn" data-go="care" type="button" style="margin-top:14px;width:100%">去护理圈留言</button>')}
+render();
+</script>
+</body>
+</html>
+
+
